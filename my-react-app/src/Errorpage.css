@@ -1,0 +1,141 @@
+.erroe-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 60px 80px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8fafc;
+    gap: 60px;
+}
+
+.error-left {
+    flex: 1;
+    max-width: 500px;
+}
+
+.error-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fee2e2;
+    color: #dc2626;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.error-left h1 {
+    font-size: 48px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 16px 0;
+}
+
+.error-left p {
+    font-size: 16px;
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.error-buttons {
+    display: flex;
+    gap: 12px;
+} 
+
+.btn-primary {
+    background: #14b8a6;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration:none ;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background: #0d9488;  
+}
+
+.btn-secondary {
+    background: white;
+    color: #14b8a6;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px soild #d1fae5;
+    transition: 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #f0fdfa;
+}
+
+.error-right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.error-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    max-width: 500px;
+}
+
+.error-card img {
+    width: 100%;
+    display: block;
+    filter: grayscale(100%);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.card-icon {
+    font-size: 24px;
+    color: #14b8a6;
+}
+
+.card-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin: 0;
+    color: #14b8a6;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    margin: 4px 0 0 0;
+}
+
+@media (max-width: 900px) {
+    .erroe-container {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+
+  .error-buttons {
+    justify-content: center;
+  }
+}

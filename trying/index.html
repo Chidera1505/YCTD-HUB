@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Candle Flame</title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                background: #0a0a0a;
+                min-height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            .scene {
+                position: relative;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                perspective: 800px
+            }
+
+            /* Ambient glow behind the candle */
+            .ambient-glow {
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: radial-gradient(circle, rgba(255, 165, 0, 0.5), transparent 70%);
+                border-radius: 50%;
+                animation: ambientPulse 3s ease-in-out infinite;
+                pointer-events: none;
+            }
+
+            @keyframes 
+            ambientPulse {
+                0%, 100% {
+                    transform: scale(1);
+                    opacity: 0.5;
+                }
+                50% {
+                    transform: scale(1.2);
+                    opacity: 0.8;
+                }
+            }
+
+            /* candle container */
+            .candle-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            /* flame area */
+            .flame-area {
+                position: relative;
+                width: 60px;
+                height: 160px;
+                display: flex;
+                justify-content: center;
+                margin-bottom: -10px;
+                z-index: 10;
+            }
+
+            /*outer glow */
+            .outer-glow {
+                position: absolute;
+                bottom: 0;
+                width: 80%;
+                height: 140%;
+                background: radial-gradient(ellipse, rgba(255, 100, 0, 0.3) 0%, rgba (255, 60, 0, 0.1), transparent 70%);
+                border-radius: 50%;
+                animation: glowpulse 0.1s infinite alternate;
+                filter: blur(20px);
+            }
+
+            @keyframes glowpulse {
+                0% {
+                    transform: scale(0.95);
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: scale(1.05);
+                    opacity: 1;
+                }
+            }
+
+            /* main flame */
+            .flame {
+                position: absolute;
+                bottom: 0;
+                width: 24px;
+                height: 90px;
+                background: radial-gradient( to top, rgba(0, 80, 255, 0.9) 0%,
+                 rgba(0, 120, 255, 0.8) 15%,
+                  rgba(255, 200, 0, 0.9) 30%,
+                 rgba(255, 100, 0, 0.95) 50% ,
+                  rgba(255, 50, 0, 0.8) 70%,
+                  rgba(255, 255, 255, 0.9) 85%,
+                  rgba(255, 255, 255, 0.4) 100%);
+                border-radius: 50% 50% 30% 30%;
+                transform-origin: bottom center;
+                animation: flicker 0.12s infinite alternate;
+                flameSway: 2s ease-in-out infinite;
+                flameGlow: 3s ease-in-out infinite;
+                filter:blur(0.5px);
+                box-shadow: 0 0 20px rgba(255, 100, 0, 0.6); 0 0 40px rgba(255, 100, 0, 0.4); 0 0 60px rgba(255, 30, 0, 0.2);
+            }
+
+            @keyframes
+            flameFlicker {
+                0% {
+                    transform:translateX(-50%) rotate(-1.50deg) scaleY(1);
+                    opacity: 0.95;
+                }
+                100% {
+                    transform:translateX(-50%) rotate(1.5deg) scaleY(1.08);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes
+            flameSway {
+                0%, 100% {
+                    margin-left: 0;   
+                }
+                25% {
+                    margin-left: 2px;
+                }
+                75% {
+                    margin-left: -2px;
+                }
+            }
+
+            @keyframes
+            flameGlow {
+                0%, 100% {
+                    height: 90px;
+                }
+                50% {
+                    height: 100px;
+                }
+            }
+
+            /* inner flame core */
+            .flame-core {
+                position: absolute;
+                bottom: 5px;
+                width: 12px;
+                height: 40px;
+                background: radial-gradient( to top, rgba(0, 255, 255, 0.9) 0%,
+                 rgba(100, 180, 255, 0.8) 30%,
+                  rgba(255, 255, 255, 0.9) 70%,
+                  rgba(255, 255, 255, 0.3) 100%);
+                border-radius: 50% 50% 40% 40%;
+                transform-origin: bottom center;
+                animation: coreFlicker 0.08s infinite alternate;
+                filter: blur(1px);
+            }
+
+            @keyframes
+            coreFlicker {
+                0% {
+                    transform:translateX(-50%) rotate(-1deg) scaleY(1);
+                    opacity: 0.9;
+                }
+                100% {
+                    transform:translateX(-50%) rotate(1deg) scaleY(1.1);
+                    opacity: 1;
+                }
+            }
+
+            /* Blue base glow */
+            .base-glow {
+                position: absolute;
+                bottom: -5px;
+                width: 30px;
+                height: 25px;
+                background: radial-gradient(ellipse, rgba(0, 100, 255, 0.6) 0%, rgba(0, 80, 200, 0.3) 50%, transparent 70%);
+                border-radius: 50%;
+                filter: blur(3px);
+                animation: basePulse 0.15s infinite alternate;
+            }
+
+            @keyframes basePulse {
+                0% {
+                    transform: translateX(-50px) scale(0.9);
+                    opacity: 0.7;
+                }
+                100% {
+                    transform: translateX(-50px) scale(1.1);
+                    opacity: 1;
+                }
+            }
+
+            /* Wick */
+            .wick {
+                position:relative;
+                width: 4px;
+                height: 25px;
+                background: linear-gradient(to bottom, #1a1a1a, 0%, #333 30%, #1a1a1a 60%, #0a0a0a 100%);
+                border-radius: 2px;
+                z-index: 5;
+                margin-bottom: -2px;
+            }
+
+            .wick::after {
+                content: '';
+                position: absolute;
+                top: -3px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 6px;
+                height: 6px;
+                background: radial-gradient(circle, #ff6600, 0%, #cc4400 100%);
+                border-radius: 50%;
+                box-shadow: 0 0 8px rgba(255, 100, 0, 0.8);
+                animation: wickGlow 0.1s infinite alternate;
+            }
+
+            @keyframes
+             wickGlow {
+                0% {
+                    opacity: 0.8;
+                    transform: translateX(-50%) scale(0.9);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateX(-50%) scale(1.1);
+                }
+            }
+
+             /* Candle body */
+            .candle-body {
+                position: relative;
+                width: 100px;
+                height: 280px;
+                background: linear-gradient(to right,
+                 #1a0f05, 0%, #3d1f08 10%, #8B4513 25%, #D2691E 40%, #CD853F 50%, #D2691E 60%, #8B4513 75%, #3d1f08 90%, #1a0f05 100%);
+                border-radius: 8px;
+                box-shadow: inset -15px 0 30px rgba(0, 0, 0, 0.5)
+                 inset 15px 0 30px rgba(0, 0, 0, 0.3) 0 10px 40px rgba(0, 0, 0, 0.6);
+                 z-index: 3;
+            }
+
+            /* candle top (melted wax pool) */
+            .candle-top {
+                position: absolute;
+                top: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 110%;
+                height: 28px;
+                background: linear-gradient(ellipse, #D2691E 0%, #8E4513 40%, #5a2d0c 70%, #3d1f08 100%);
+                border-radius: 50%;
+                box-shadow: inset 0  3px 10px rgba(0, 0, 0, 0.4), 0 2px 5px rgba(0, 0, 0, 0.3);
+                z-index: 4;
+            }
+        </style>
+</head>
+
+<body>
+    <div class="scene">
+        <div class="ambient-glow"></div>
+        <div class="candle-wrapper">
+            <div class="flame-area">
+                <div class="outer-glow"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
